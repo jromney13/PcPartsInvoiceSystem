@@ -18,7 +18,7 @@ namespace PcPartsInvoiceSystem.Main
     /// Interaction logic for wndMain.xaml
     /// </summary>
     public partial class wndMain : Window
-    {
+    {        
         public wndMain()
         {
             InitializeComponent();

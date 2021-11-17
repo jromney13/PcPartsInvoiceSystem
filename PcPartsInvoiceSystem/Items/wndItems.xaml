@@ -5,8 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PcPartsInvoiceSystem.Items"
         mc:Ignorable="d"
-        Title="wndItems" Height="450" Width="800">
+        Title="wndItems" Height="450" Width="800" Background="#FFE3EFFD">
     <Grid>
-        
+        <Label x:Name="lblItems" Content="Items" HorizontalAlignment="Left" Margin="56,35,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20"/>
+        <DataGrid x:Name="dgItems" HorizontalAlignment="Center" Height="305" Margin="56,77,286,0" VerticalAlignment="Top" Width="450" AutoGenerateColumns="False" BorderBrush="Black">
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Header="Code" Width="50" IsReadOnly="True" Binding="{Binding sItemCode}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Description" Width="250
+                                    " Binding="{Binding sItemDescription}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Cost" Width="90" Binding="{Binding sItemCost}"></DataGridTextColumn>
+
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="cmdAdd" Content="Add Item" HorizontalAlignment="Left" Margin="533,180,0,0" VerticalAlignment="Top" Width="75" Click="cmdAdd_Click" Background="#FFA5FFD2"/>
+        <Button x:Name="cmdEdit" Content="Edit Item" HorizontalAlignment="Left" Margin="533,321,0,0" VerticalAlignment="Top" Width="75" Background="#FFFFFFA5"/>
+        <Button x:Name="cmdDelete" Content="Delete Item" HorizontalAlignment="Left" Margin="533,362,0,0" VerticalAlignment="Top" Width="75" Background="#FFFFAAAA"/>
+        <TextBox x:Name="inAddDescription" HorizontalAlignment="Left" Height="23" Margin="533,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="inAddCost" HorizontalAlignment="Left" Height="23" Margin="533,146,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblDescription" Content="Description" HorizontalAlignment="Left" Margin="533,77,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="10"/>
+        <Label x:Name="lblCost" Content="Cost" HorizontalAlignment="Left" Margin="533,123,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="10"/>
+        <TextBox x:Name="inAddDescription_Copy" HorizontalAlignment="Left" Height="23" Margin="533,241,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="inAddCost_Copy" HorizontalAlignment="Left" Height="23" Margin="533,287,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblDescription_Copy" Content="Description" HorizontalAlignment="Left" Margin="533,218,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="10"/>
+        <Label x:Name="lblCost_Copy" Content="Cost" HorizontalAlignment="Left" Margin="533,264,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="10"/>
+
     </Grid>
 </Window>
