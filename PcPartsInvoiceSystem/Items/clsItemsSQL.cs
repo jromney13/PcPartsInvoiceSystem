@@ -8,43 +8,23 @@ using System.Reflection;
 
 namespace PcPartsInvoiceSystem.Items
 {
+    /// <summary>
+    /// class to return different SQL statements for the Edit Items window, depending on the required action. 
+    /// Select all, add, delete, edit, and find on outstanding invoices.
+    /// </summary>
     class clsItemsSQL
     {
         #region low level methods
 
         /// <summary>
-        /// Populates Item List with items from the current database.
+        /// SQL statement to select all items
         /// </summary>
-        /// <param name="db">the database to be pulled from</param>
-        /// <returns>Returns a list of items for sale</returns>
-        public List<clsItem> PopulateItemList(clsDataAccess db)
+        /// <returns>returns a SQL statement to select all items</returns>
+        public string SelectAllItems()
         {
             try
             {
-                List<clsItem> itemList = new List<clsItem>();
-
-                string sSQL;    //Holds an SQL statement
-                int iRet = 0;   //Number of return values
-                DataSet ds = new DataSet(); //Holds the return values
-                clsItem item; //Used to load the return values into the combo box
-
-                //Create the SQL statement to extract the items
-                sSQL = "SELECT * FROM ItemDesc";
-
-                //Extract the items and put them into the DataSet
-                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
-
-                //Loop through the data and create item objects to add to itemList
-                for (int i = 0; i < iRet; i++)
-                {
-                    item = new clsItem();
-                    item.sItemCode = ds.Tables[0].Rows[i]["ItemCode"].ToString();
-                    item.sItemDescription = ds.Tables[0].Rows[i]["ItemDesc"].ToString();
-                    item.sItemCost = "$" + String.Format("{0:0.00}", Convert.ToDouble(ds.Tables[0].Rows[i]["Cost"]));
-
-                    itemList.Add(item);
-                }
-                return itemList;
+                return "SELECT * FROM ItemDesc";
             }
             catch (Exception ex)
             {
@@ -54,123 +34,73 @@ namespace PcPartsInvoiceSystem.Items
         }
 
         /// <summary>
-        /// Adds a user inputted item to the list of items.
+        /// SQL statement to add an item
         /// </summary>
-        /// <param name="db">The database to work from</param>
-        /// <param name="itemNew">The new item to be added to the database</param>
-        public void AddItem(clsDataAccess db, clsItem itemNew)
+        /// <param name="itemToAdd">The item object to be added</param>
+        /// <returns>Returns an SQL statement to select all items</returns>
+        public string AddItem(clsItem itemToAdd)
         {
             try
             {
-                string sSQL;    //Store the SQL statement
-                int iRet = 0;   //Number of return values
-
-                //SQL statement to add an item
-                sSQL = "INSERT INTO ItemDesc (ItemCode, ItemDesc, Cost) VALUES (" + itemNew.sItemCode + "," + itemNew.sItemDescription + "," + itemNew.sItemCost + ")";
-
-                //Execute SQL statement
-                iRet = db.ExecuteNonQuery(sSQL);
-
-                return;
+                return "INSERT INTO ItemDesc (ItemCode, ItemDesc, Cost) VALUES (" + itemToAdd.sItemCode + "," + itemToAdd.sItemDescription + "," + itemToAdd.sItemCost + ")";
             }
             catch (Exception ex)
             {
-                //Low-Level Method: Throw error
+                //Low Level Method: Throw error
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
         /// <summary>
-        /// Updates the selected item with the requested description and cost
+        /// SQL statement to edit an item
         /// </summary>
-        /// <param name="db">The database to work from</param>
-        /// <param name="itemUpdate">The temp item to copy values from</param>
-        public void EditItem(clsDataAccess db, clsItem itemUpdate)
+        /// <param name="itemToEdit">The item object to be edited</param>
+        /// <returns>Returns an SQL statement to edit the selected item</returns>
+        public string EditItem(clsItem itemToEdit)
         {
             try
             {
-                string sSQL;    //Store the SQL statement
-                int iRet = 0;   //Number of return values
-
-                //SQL statement to edit an item
-                sSQL = "UPDATE ItemDesc SET ItemDesc = " + itemUpdate.sItemDescription + ", Cost = " + itemUpdate.sItemCost + "WHERE ItemCode = " + itemUpdate.sItemCode;
-
-                //Execute SQL statement
-                iRet = db.ExecuteNonQuery(sSQL);
-
-                return;
+                return "UPDATE ItemDesc SET ItemDesc = " + itemToEdit.sItemDescription + ", Cost = " + itemToEdit.sItemCost + "WHERE ItemCode = " + itemToEdit.sItemCode;
             }
             catch (Exception ex)
             {
-                //Low-Level Method: Throw error
+                //Low Level Method: Throw error
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
         /// <summary>
-        /// Deletes the requested item from the database.
+        /// SQL statement to delete an item
         /// </summary>
-        /// <param name="db">The database to work from</param>
-        /// <param name="itemDelete">The item to be deleted</param>
-        public void DeleteItem(clsDataAccess db, clsItem itemDelete)
+        /// <param name="itemToDelete">The item object to be deleted</param>
+        /// <returns>Returns an SQL statement to delete the selected item</returns>
+        public string DeleteItem(clsItem itemToDelete)
         {
             try
             {
-                string sSQL;    //Store the SQL statement
-                int iRet = 0;   //Number of return values
-
-                //SQL statement to delete an item
-                sSQL = "DELETE FROM ItemDesc WHERE ItemCode = + " + itemDelete.sItemCode;
-
-                //Execute SQL statement
-                iRet = db.ExecuteNonQuery(sSQL);
-
-                return;
+                return "DELETE FROM ItemDesc WHERE ItemCode = + " + itemToDelete.sItemCode;
             }
             catch (Exception ex)
             {
-                //Low-Level Method: Throw error
+                //Low Level Method: Throw error
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
         /// <summary>
-        /// Checks the LineItems table to see if the item to delete is currently 
-        /// part of an invoice.
+        /// SQL statement to find invoices which the current item is currently part of
         /// </summary>
-        /// <param name="db">The database to work from</param>
-        /// <param name="itemDelete">The item pending a delete</param>
-        /// <returns>Returns a list of invoice numbers for which the item currently
-        /// resides</returns>
-        public List<string> ItemInvoices(clsDataAccess db, clsItem itemDelete)
+        /// <param name="itemToDelete">The item which is attempting to be deleted</param>
+        /// <returns>Returns an SQL statement to find the selected item on any outstanding invoices.</returns>
+        public string ConnectedInvoices(clsItem itemToDelete)
         {
             try
             {
-                List<string> itemInvoiceList = new List<string>();
-
-                string sSQL;    //Holds an SQL statement
-                int iRet = 0;   //Number of return values
-                DataSet ds = new DataSet(); //Holds the return values
-                string invoiceNum; //Used to load the return values into the combo box
-
-                //Create the SQL statement to extract the items
-                sSQL = "SELECT DISTINCT(InvoiceNum) FROM LineItems WHERE ItemCode = " + itemDelete.sItemCode;
-
-                //Extract the items and put them into the DataSet
-                ds = db.ExecuteSQLStatement(sSQL, ref iRet);
-
-                //Loop through the data and create item objects to add to itemList
-                for (int i = 0; i < iRet; i++)
-                {
-                    //add the invoice numbers to the list
-                    invoiceNum = ds.Tables[0].Rows[i]["InvoiceNum"].ToString();
-                    itemInvoiceList.Add(invoiceNum);
-                }
-                return itemInvoiceList;
+                return "SELECT DISTINCT(InvoiceNum) FROM LineItems WHERE ItemCode = " + itemToDelete.sItemCode;
             }
             catch (Exception ex)
             {
-                //Low-Level Method: Throw error
+                //Low Level Method: Throw error
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }

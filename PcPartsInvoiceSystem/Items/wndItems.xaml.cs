@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Reflection;
+using PcPartsInvoiceSystem.Main;
 
 namespace PcPartsInvoiceSystem.Items
 {
@@ -29,19 +30,14 @@ namespace PcPartsInvoiceSystem.Items
         clsDataAccess db; //On main? and pass into this window?
 
         /// <summary>
-        /// class to handle SQL commands
-        /// </summary>
-        clsItemsSQL items;
-
-        /// <summary>
         /// class to handle Item Logic
         /// </summary>
-        clsItemsLogic itemLogic;
+        clsItemsLogic items;
 
         /// <summary>
         /// Tells if the user is deleting a row.
         /// </summary>
-        bool IsDeleting = false;
+        bool bIsDeleting = false;
 
         #endregion
 
@@ -55,11 +51,8 @@ namespace PcPartsInvoiceSystem.Items
                 //Initialize Database
                 db = new clsDataAccess(); //On main?
 
-                //Initialize a item SQL class
-                items = new clsItemsSQL();
-
                 //Initialize item logic
-                itemLogic = new clsItemsLogic();
+                items = new clsItemsLogic();
 
                 //Bind item list to DataGrid
                 dgItems.ItemsSource = items.PopulateItemList(db);
@@ -84,6 +77,9 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
+                //test
+                lblMessage.Text = inAddDescription.Text + " added.";
+
                 //Make sure the item code is not empty, and is unique
 
                 //Make sure the description input has a value
@@ -110,6 +106,9 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
+                //test
+                lblMessage.Text = inEditDescription.Text + " edited.";
+                
                 //Make sure the description input has a value
 
                 //Make sure the cost input can be parsed as a double
@@ -134,6 +133,9 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
+                //test
+                lblMessage.Text = inEditDescription.Text + " deleted.";
+                
                 //If there is an item selected
                 //if (dgItems.SelectedIndex < dgItems.Items.Count - 1)
                 //{
@@ -184,7 +186,7 @@ namespace PcPartsInvoiceSystem.Items
                 if (dgItems.SelectedItem != null)
                 {
                     //Make sure user is not deleting
-                    if (!IsDeleting)
+                    if (!bIsDeleting)
                     {
                         //Make sure selected index is valid
                         if (dgItems.SelectedIndex < dgItems.Items.Count - 1)
@@ -216,6 +218,8 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
+                wndMain main = new wndMain();
+                main.Show();
                 this.Hide();
             }
             catch (Exception ex)
@@ -237,8 +241,7 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
-                List<clsItem> itemList = items.PopulateItemList(db);
-                return itemList;
+                return items.itemList;
             }            
             catch (Exception ex)
             {

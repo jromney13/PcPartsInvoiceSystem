@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PcPartsInvoiceSystem
 {
+    /// <summary>
+    /// A class to store a LineItem object
+    /// </summary>
     public class clsLineItem
     {
         /// <summary>

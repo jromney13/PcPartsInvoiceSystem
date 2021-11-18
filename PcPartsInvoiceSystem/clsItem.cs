@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PcPartsInvoiceSystem.Items
 {
+    /// <summary>
+    /// A class to store an item object
+    /// </summary>
     public class clsItem
     {
         #region attributes

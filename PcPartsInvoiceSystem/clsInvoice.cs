@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PcPartsInvoiceSystem
 {
+    /// <summary>
+    /// A class to store an invoice object
+    /// </summary>
     public class clsInvoice
     {
         /// <summary>

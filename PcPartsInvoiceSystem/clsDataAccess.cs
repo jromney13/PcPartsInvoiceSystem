@@ -21,7 +21,7 @@ using System.Data.SqlTypes;
         /// </summary>
 		public clsDataAccess()
 		{
-            sConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + "\\../../Invoice.mdb";
+            sConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + "\\/../../Invoice.mdb";
 		}
 
         /// <summary>
