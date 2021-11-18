@@ -29,5 +29,28 @@ namespace PcPartsInvoiceSystem.Items
         public string sItemCost { get; set; }
 
         #endregion
+
+        /// <summary>
+        /// Empty Constructor w/ no setters
+        /// </summary>
+        public clsItem()
+        {
+
+        }
+
+        /// <summary>
+        /// Constructor that sets the item properties
+        /// </summary>
+        /// <param name="sItemCode"></param>
+        /// <param name="sItemDescription"></param>
+        /// <param name="sItemCost"></param>
+        public clsItem(string sItemCode, string sItemDescription, string sItemCost)
+        {
+            this.sItemCode = sItemCode;
+            this.sItemDescription = sItemDescription;
+            this.sItemCost = sItemCost;
+        }
+
+
     }
 }

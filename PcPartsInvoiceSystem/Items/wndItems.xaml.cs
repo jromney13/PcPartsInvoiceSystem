@@ -218,9 +218,7 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
-                wndMain main = new wndMain();
-                main.Show();
-                this.Hide();
+                this.Close();
             }
             catch (Exception ex)
             {

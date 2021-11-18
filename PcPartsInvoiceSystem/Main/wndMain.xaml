@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PcPartsInvoiceSystem.Main"
         mc:Ignorable="d"
-        Title="wndMain" Height="450" Width="800">
+        Title="PC Parts Invoice System" Height="450" Width="800">
     <Grid>
-        
+        <DockPanel Margin="0,0,-0.4,393">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_Open">
+                    <MenuItem x:Name="menuSearch" Header="_Search" Click="menuSearch_Click" />
+                    <MenuItem x:Name="menuUpdate" Header="_Update Items" Click="menuUpdate_Click" />
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <DataGrid HorizontalAlignment="Left" Height="340" Margin="330,47,0,0" VerticalAlignment="Top" Width="408">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Code" Width="50" IsReadOnly="True" Binding="{Binding sItemCode}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Description" Width="250" Binding="{Binding sItemDescription}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Cost" Width="90" Binding="{Binding sItemCost}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="Invoice Number:" HorizontalAlignment="Left" Margin="19,63,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblInvoiceNum" Content="TBD" HorizontalAlignment="Left" Margin="138,63,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="dpDate" HorizontalAlignment="Left" Margin="138,89,0,0" VerticalAlignment="Top"/>
+        <Label Content="Invoice Date:" HorizontalAlignment="Left" Margin="38,89,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cmbItems" HorizontalAlignment="Left" Margin="138,117,0,0" VerticalAlignment="Top" Width="165" SelectionChanged="cmbItems_SelectionChanged"/>
+        <Label Content="Items:" HorizontalAlignment="Left" Margin="75,114,0,0" VerticalAlignment="Top"/>
+        <Label Content="Item Cost:" HorizontalAlignment="Left" Margin="52,145,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtItemCost" HorizontalAlignment="Left" Height="23" Margin="138,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="102" IsReadOnly="True"/>
+        <Button Content="Save Invoice" HorizontalAlignment="Left" Margin="124,246,0,0" VerticalAlignment="Top" Width="100" Height="34"/>
+        <Button Content="Add Item" HorizontalAlignment="Left" Margin="61,185,0,0" VerticalAlignment="Top" Width="100" Height="34"/>
+        <Button Content="Delete Item" HorizontalAlignment="Left" Margin="182,185,0,0" VerticalAlignment="Top" Width="100" Height="34"/>
     </Grid>
 </Window>

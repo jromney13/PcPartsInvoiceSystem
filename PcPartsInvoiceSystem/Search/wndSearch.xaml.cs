@@ -172,8 +172,6 @@ namespace PcPartsInvoiceSystem.Search
         {
             try
             {
-                wndMain main = new wndMain();
-                main.Show();
                 this.Close();
             }
             catch (Exception ex) 
