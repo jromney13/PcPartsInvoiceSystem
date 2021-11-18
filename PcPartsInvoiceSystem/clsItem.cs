@@ -6,12 +6,23 @@ using System.Threading.Tasks;
 
 namespace PcPartsInvoiceSystem.Items
 {
-    class clsItem
+    public class clsItem
     {
         #region attributes
 
+        /// <summary>
+        /// The Item Code
+        /// </summary>
         public string sItemCode { get; set; }
+        
+        /// <summary>
+        /// The Item Description
+        /// </summary>
         public string sItemDescription { get; set; }
+        
+        /// <summary>
+        /// The Item Cost
+        /// </summary>
         public string sItemCost { get; set; }
 
         #endregion
