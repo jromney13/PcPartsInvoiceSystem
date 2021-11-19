@@ -23,7 +23,7 @@ namespace PcPartsInvoiceSystem.Main
 
                 int iRet = 0;
 
-                ds = db.ExecuteSQLStatement(sql.SelectItemData(), ref iRet);
+                ds = db.ExecuteSQLStatement(sql.SelectAllItemData(), ref iRet);
 
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {

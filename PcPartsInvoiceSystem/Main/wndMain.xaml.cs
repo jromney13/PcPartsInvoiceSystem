@@ -25,6 +25,7 @@ namespace PcPartsInvoiceSystem.Main
         wndItems itemsWindow;
         clsMainLogic mainLogic = new clsMainLogic();
 
+        // TODO: Add exception handling and comments to class
         public wndMain()
         {
             InitializeComponent();
@@ -51,6 +52,32 @@ namespace PcPartsInvoiceSystem.Main
         {
             clsItem selectedItem = (clsItem)cmbItems.SelectedItem;
             txtItemCost.Text = selectedItem.sItemCost;
+        }
+
+        // TODO: ADD interface comments for button clicks
+        private void btnAddItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnDeleteItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnSaveInvoice_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnEditInvoice_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnDeleteInvoice_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
