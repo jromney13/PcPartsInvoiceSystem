@@ -8,11 +8,24 @@ using System.Threading.Tasks;
 
 namespace PcPartsInvoiceSystem.Main
 {
+    /// <summary>
+    /// Logic for the Main Window
+    /// </summary>
     class clsMainLogic
     {
+        /// <summary>
+        /// Data Access Class to process SQL queries
+        /// </summary>
         clsDataAccess db = new clsDataAccess();
+        /// <summary>
+        /// SQL class that returns SQL strings.
+        /// </summary>
         clsMainSQL sql = new clsMainSQL();
 
+        /// <summary>
+        /// Generates list of all items in the database
+        /// </summary>
+        /// <returns></returns>
         public List<clsItem> GenerateItemList()
         {
             try
