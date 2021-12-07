@@ -131,6 +131,29 @@ namespace PcPartsInvoiceSystem.Items
         }
 
         /// <summary>
+        /// Queries the database to see if the given item code matches an item in the database.
+        /// </summary>
+        /// <param name="db">The database to work from</param>
+        /// <param name="sItemCode">The user inputted item code</param>
+        /// <returns>True if the item is unique, False otherwise.</returns>
+        public bool IsUnique(clsDataAccess db, string sItemCode)
+        {
+            try
+            {
+                if (db.ExecuteScalarSQL(SQL.FindItem(sItemCode)).Equals(""))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                //Low-Level Method: Throw error
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Checks the LineItems table to see if the item to delete is currently 
         /// part of an invoice.
         /// </summary>

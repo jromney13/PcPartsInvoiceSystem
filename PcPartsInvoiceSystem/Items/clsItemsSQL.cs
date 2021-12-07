@@ -42,7 +42,7 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
-                return "INSERT INTO ItemDesc (ItemCode, ItemDesc, Cost) VALUES (" + itemToAdd.sItemCode + "," + itemToAdd.sItemDescription + "," + itemToAdd.sItemCost + ")";
+                return "INSERT INTO ItemDesc (ItemCode, ItemDesc, Cost) VALUES (\"" + itemToAdd.sItemCode + "\", \"" + itemToAdd.sItemDescription + "\", \"" + itemToAdd.sItemCost + "\")";
             }
             catch (Exception ex)
             {
@@ -97,6 +97,25 @@ namespace PcPartsInvoiceSystem.Items
             try
             {
                 return "SELECT DISTINCT(InvoiceNum) FROM LineItems WHERE ItemCode = " + itemToDelete.sItemCode;
+            }
+            catch (Exception ex)
+            {
+                //Low Level Method: Throw error
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Returns an SQL statement to check for an item in the database, by the given item code.
+        /// </summary>
+        /// <param name="sItemCode">The user inputted item code</param>
+        /// <returns>An SQL statement to check for an item in the database, by the given item code.</returns>
+        public string FindItem(string sItemCode)
+        {
+            try
+            {
+                return "SELECT * FROM ItemDesc " +
+                        "WHERE ItemCode = \"" + sItemCode + "\"";
             }
             catch (Exception ex)
             {

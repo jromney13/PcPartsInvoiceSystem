@@ -77,18 +77,43 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
-                //test
-                lblMessage.Text = inAddDescription.Text + " added.";
+                //Make sure the item code is not empty
+                if (inAddCode.Text.Equals(""))
+                {
+                    lblMessage.Text = "Item must have a code.";
+                    return;
+                }
 
-                //Make sure the item code is not empty, and is unique
+                //Make sure the item code is unique
+                if (!items.IsUnique(db, inAddCode.Text))
+                {
+                    lblMessage.Text = "Item code must be unique";
+                    return;
+                }
 
                 //Make sure the description input has a value
+                if (inAddDescription.Text.Equals(""))
+                {
+                    lblMessage.Text = "Item must have a description.";
+                    return;
+                }
 
                 //Make sure the cost input can be parsed as a double
+                if (!Double.TryParse(inAddCost.Text, out double cost))
+                {
+                    lblMessage.Text = "Cost must be a dollar amount.";
+                    return;
+                }
 
                 //Call items.AddItem() to add
+                clsItem newItem = new clsItem(inAddCode.Text, inAddDescription.Text, inAddCost.Text);
+                items.AddItem(db, newItem);
 
                 //reflect the change in the DataGrid
+                dgItems.ItemsSource = items.PopulateItemList(db);
+
+                //Leave message for user
+                lblMessage.Text = inAddDescription.Text + " added.";
             }
             catch (Exception ex)
             {
