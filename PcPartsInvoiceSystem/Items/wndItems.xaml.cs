@@ -131,7 +131,7 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
-                //Make sure there is a valid selection
+                //Make sure there is a valid selection which is non-null
                 if (dgItems.SelectedItem != null && dgItems.SelectedIndex < dgItems.Items.Count - 1)
                 {
                     //Get selected item
@@ -195,38 +195,43 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
-                //test
-                lblMessage.Text = inEditDescription.Text + " deleted.";
-                
-                //If there is an item selected
-                //if (dgItems.SelectedIndex < dgItems.Items.Count - 1)
-                //{
-                //    //Create item object from current row
-                //    clsItem itemDelete = (clsItem)dgItems.SelectedItem;
+                //If there is an item selected which is non-null
+                if (dgItems.SelectedItem != null && dgItems.SelectedIndex < dgItems.Items.Count - 1)
+                {
+                    //Create item object from current row
+                    clsItem itemToDelete = (clsItem)dgItems.SelectedItem;
 
-                //    //Check that this item is not on any existing invoices
-                //    List<string> invoiceNumbers = new List<string>();
-                //    invoiceNumbers = items.ItemInvoices(db, itemDelete);
+                    //Check that this item is not on any existing invoices
+                    List<string> invoiceNumbers = new List<string>();
+                    invoiceNumbers = items.ItemInvoices(db, itemToDelete);
 
-                //    //if this item is on an invoice, leave a message and do not delete
-                //    if (invoiceNumbers.Count > 0)
-                //    {
-                //        lblMessage.Text = "Cannot Delete. Item currently on invoice(s): ";
-                //        foreach (string number in invoiceNumbers)
-                //        {
-                //            lblMessage.Text += number + " ";
-                //        }
-                //        lblMessage.Text += ".";
-                //    }
-                //    //Otherwise, delete this item
-                //    else
-                //    {
-                //Mark that this item is deleting
+                    //if this item is on an invoice, leave a message and do not delete
+                    if (invoiceNumbers.Count > 0)
+                    {
+                        lblMessage.Text = "Cannot Delete. Item currently on invoice(s): ";
+                        foreach (string number in invoiceNumbers)
+                        {
+                            lblMessage.Text += number + " ";
+                        }
+                        lblMessage.Text += ".";
+                    }
+                    //Otherwise, delete this item
+                    else
+                    {
+                        //Mark that this item is deleting
+                        bIsDeleting = true;
 
-                //Call items.DeleteItem()
-                //        items.DeleteItem(db, itemDelete);
-                //    }
-                //}
+                        //Call items.DeleteItem()
+                        items.DeleteItem(db, itemToDelete);
+
+                        //Inform user of deletion
+                        lblMessage.Text = inEditDescription.Text + " deleted.";
+
+                        //Reflect deletion in DataGrid
+                        dgItems.ItemsSource = items.PopulateItemList(db);
+                    }
+                }
+                bIsDeleting = false;
             }
             catch (Exception ex)
             {

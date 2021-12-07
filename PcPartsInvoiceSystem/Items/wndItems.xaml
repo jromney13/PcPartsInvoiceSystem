@@ -11,7 +11,7 @@
         <DataGrid x:Name="dgItems" HorizontalAlignment="Center" Height="305" Margin="56,77,286,0" VerticalAlignment="Top" Width="450" AutoGenerateColumns="False" BorderBrush="Black" IsSynchronizedWithCurrentItem="False" SelectionMode="Single" SelectionChanged="dgItems_SelectionChanged">
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="Code" Width="50" IsReadOnly="True" Binding="{Binding sItemCode}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Code" Width="50" IsReadOnly="True" Binding="{Binding sItemCode}" SortDirection="Ascending"></DataGridTextColumn>
                 <DataGridTextColumn Header="Description" Width="250" Binding="{Binding sItemDescription}" IsReadOnly="True"></DataGridTextColumn>
                 <DataGridTextColumn Header="Cost" Width="90" Binding="{Binding sItemCost}" IsReadOnly="True"></DataGridTextColumn>
 

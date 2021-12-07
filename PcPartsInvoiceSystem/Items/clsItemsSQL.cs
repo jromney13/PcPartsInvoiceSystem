@@ -24,7 +24,8 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
-                return "SELECT * FROM ItemDesc";
+                return "SELECT * FROM ItemDesc " +
+                        "ORDER BY ItemCode ASC";
             }
             catch (Exception ex)
             {
@@ -78,7 +79,7 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
-                return "DELETE FROM ItemDesc WHERE ItemCode = + " + itemToDelete.sItemCode;
+                return "DELETE FROM ItemDesc WHERE ItemCode = + \"" + itemToDelete.sItemCode + "\"";
             }
             catch (Exception ex)
             {
@@ -96,7 +97,7 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
-                return "SELECT DISTINCT(InvoiceNum) FROM LineItems WHERE ItemCode = " + itemToDelete.sItemCode;
+                return "SELECT DISTINCT(InvoiceNum) FROM LineItems WHERE ItemCode = \"" + itemToDelete.sItemCode + "\"";
             }
             catch (Exception ex)
             {
