@@ -60,7 +60,7 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
-                return "UPDATE ItemDesc SET ItemDesc = " + itemToEdit.sItemDescription + ", Cost = " + itemToEdit.sItemCost + "WHERE ItemCode = " + itemToEdit.sItemCode;
+                return "UPDATE ItemDesc SET ItemDesc = \"" + itemToEdit.sItemDescription + "\", Cost = \"" + itemToEdit.sItemCost + "\" WHERE ItemCode = \"" + itemToEdit.sItemCode + "\"";
             }
             catch (Exception ex)
             {

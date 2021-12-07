@@ -54,7 +54,7 @@ namespace PcPartsInvoiceSystem.Items
                     item = new clsItem();
                     item.sItemCode = ds.Tables[0].Rows[i]["ItemCode"].ToString();
                     item.sItemDescription = ds.Tables[0].Rows[i]["ItemDesc"].ToString();
-                    item.sItemCost = "$" + String.Format("{0:0.00}", Convert.ToDouble(ds.Tables[0].Rows[i]["Cost"]));
+                    item.sItemCost = String.Format("{0:0.00}", Convert.ToDouble(ds.Tables[0].Rows[i]["Cost"]));
 
                     itemList.Add(item);
                 }

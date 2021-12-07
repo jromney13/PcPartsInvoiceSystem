@@ -131,16 +131,53 @@ namespace PcPartsInvoiceSystem.Items
         {
             try
             {
-                //test
-                lblMessage.Text = inEditDescription.Text + " edited.";
-                
-                //Make sure the description input has a value
+                //Make sure there is a valid selection
+                if (dgItems.SelectedItem != null && dgItems.SelectedIndex < dgItems.Items.Count - 1)
+                {
+                    //Get selected item
+                    clsItem itemToEdit = (clsItem)dgItems.SelectedItem;
 
-                //Make sure the cost input can be parsed as a double
+                    //Make sure the description input has a value
+                    if (inEditDescription.Text.Equals(""))
+                    {
+                        lblMessage.Text = "Item must have a description.";
+                        return;
+                    }
 
-                //Call items.EditItem() to edit
+                    //Make sure the cost input can be parsed as a double
+                    if (!Double.TryParse(inEditCost.Text, out double cost))
+                    {
+                        lblMessage.Text = "Cost must be a dollar amount.";
+                        return;
+                    }
 
-                //reflect the change in the DataGrid
+                    //Update local item with new values
+                    if (itemToEdit != null)
+                    {
+                        itemToEdit.sItemDescription = inEditDescription.Text;
+                        itemToEdit.sItemCost = inEditCost.Text;
+                    }
+                    else
+                    {
+                        lblMessage.Text = "Select an item to edit.";
+                    }
+                    
+
+                    //Call items.EditItem() to edit                
+                    items.EditItem(db, itemToEdit);
+
+                    //reflect the change in the DataGrid
+                    dgItems.ItemsSource = items.PopulateItemList(db);
+
+                    //Inform the user of the change
+                    lblMessage.Text = inEditDescription.Text + " edited.";
+                }
+
+                else
+                {
+                    lblMessage.Text = "Select an item to edit.";
+                    return;
+                }
             }
             catch (Exception ex)
             {

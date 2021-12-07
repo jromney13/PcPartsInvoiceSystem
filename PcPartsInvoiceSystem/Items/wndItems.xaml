@@ -12,8 +12,8 @@
             <DataGrid.Columns>
 
                 <DataGridTextColumn Header="Code" Width="50" IsReadOnly="True" Binding="{Binding sItemCode}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Description" Width="250" Binding="{Binding sItemDescription}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Cost" Width="90" Binding="{Binding sItemCost}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Description" Width="250" Binding="{Binding sItemDescription}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Cost" Width="90" Binding="{Binding sItemCost}" IsReadOnly="True"></DataGridTextColumn>
 
 
             </DataGrid.Columns>
