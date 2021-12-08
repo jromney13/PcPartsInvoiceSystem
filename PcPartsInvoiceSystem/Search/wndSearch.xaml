@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PcPartsInvoiceSystem.Search"
         mc:Ignorable="d"
-        Title="Search" Height="450" Width="800">
+        Title="Search" Height="450" Width="800" Background="#FFCCE0F2">
     <Grid>
         <Grid HorizontalAlignment="Left" Height="253" Margin="10,10,0,0" VerticalAlignment="Top" Width="350">
             <Rectangle Fill="#FFDEDEDE" Stroke="White"/>
