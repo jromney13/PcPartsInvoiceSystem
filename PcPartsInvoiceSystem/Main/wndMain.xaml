@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="PC Parts Invoice System" Height="450" Width="800" Background="#FFCCE0F2">
     <Grid>
-        <DockPanel Margin="0,0,-0.4,393">
+        <DockPanel Margin="0,0,-0.444,387.667">
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_Open">
+                <MenuItem Header="_Open" Margin="0,1,0,0.111">
                     <MenuItem x:Name="menuSearch" Header="_Search" Click="menuSearch_Click" />
                     <MenuItem x:Name="menuUpdate" Header="_Update Items" Click="menuUpdate_Click" />
                 </MenuItem>
