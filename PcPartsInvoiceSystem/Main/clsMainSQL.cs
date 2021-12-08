@@ -93,7 +93,7 @@ namespace PcPartsInvoiceSystem.Main
         /// <returns></returns>
         public string InsertInvoice(string invoiceDate, string totalCost)
         {
-            string sSQL = "INSERT INTO Invoices(InvoiceDate, TotalCost) Values(\'#" + invoiceDate + "#\', " + totalCost + ")";
+            string sSQL = "INSERT INTO Invoices(InvoiceDate, TotalCost) Values(#" + invoiceDate + "#, " + totalCost + ")";
 
             return sSQL;
         }
@@ -107,6 +107,13 @@ namespace PcPartsInvoiceSystem.Main
         public string UpdateTotalCost(string totalCost, string invoiceNum)
         {
             string sSQL = "UPDATE Invoices SET TotalCost = " + totalCost + " WHERE InvoiceNum = " + invoiceNum;
+
+            return sSQL;
+        }
+
+        public string GetLastInvoiceNumber()
+        {
+            string sSQL = "SELECT MAX(InvoiceNum) FROM Invoices";
 
             return sSQL;
         }

@@ -2,6 +2,7 @@
 using PcPartsInvoiceSystem.Search;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -35,6 +36,10 @@ namespace PcPartsInvoiceSystem.Main
         /// </summary>
         clsMainLogic mainLogic = new clsMainLogic();
 
+        List<clsItem> itemList = new List<clsItem>();
+
+        double invoiceTotal = 0;
+
         /// <summary>
         /// Constructor for Main Window
         /// </summary>
@@ -48,6 +53,8 @@ namespace PcPartsInvoiceSystem.Main
 
                 cmbItems.DisplayMemberPath = "sItemDescription";
                 cmbItems.SelectedValuePath = "sItemDescription";
+
+                dgMain.ItemsSource = itemList;
             }
             catch (Exception ex)
             {
@@ -123,7 +130,34 @@ namespace PcPartsInvoiceSystem.Main
         /// <param name="e"></param>
         private void btnAddItem_Click(object sender, RoutedEventArgs e)
         {
-            
+            try
+            {
+                if(cmbItems.SelectedItem == null)
+                {
+                    return;
+                }
+
+                // get selected item from combo box
+                clsItem item = (clsItem)cmbItems.SelectedItem;
+
+                // add item to datagrid list
+                itemList.Add(item);
+
+                // refresh datagrid
+                dgMain.Items.Refresh();
+                dgMain.SelectedIndex = 0;
+
+                // update invoice total
+                Double.TryParse(item.sItemCost, out double itemCost);
+                invoiceTotal += itemCost;
+
+                txtInvoiceCost.Text = invoiceTotal.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
 
         /// <summary>
@@ -133,7 +167,30 @@ namespace PcPartsInvoiceSystem.Main
         /// <param name="e"></param>
         private void btnDeleteItem_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (dgMain.SelectedItem != null)
+                {
+                    Double.TryParse(((clsItem)dgMain.SelectedItem).sItemCost, out double itemCost);
+                    invoiceTotal -= itemCost;
 
+                    txtInvoiceCost.Text = invoiceTotal.ToString();
+
+                    itemList.RemoveAt(dgMain.SelectedIndex);
+                    dgMain.Items.Refresh();
+
+                    if(dgMain.Items.Count - 1 == 0)
+                    {
+                        txtInvoiceCost.Text = "0";
+                    }
+                    
+
+                }
+            }
+            catch(Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
 
         /// <summary>
@@ -143,7 +200,29 @@ namespace PcPartsInvoiceSystem.Main
         /// <param name="e"></param>
         private void btnSaveInvoice_Click(object sender, RoutedEventArgs e)
         {
+            if(dgMain.Items.Count - 1 == 0 || dpDate.SelectedDate == null)
+            {
+                return;
+            }
 
+            DateTime date = (DateTime)dpDate.SelectedDate;
+            string sDate = date.ToString("d", CultureInfo.GetCultureInfo("en-US"));
+
+            string invoiceNum = mainLogic.AddInvoice(sDate, invoiceTotal.ToString(), itemList);
+
+            btnAddItem.IsEnabled = false;
+            btnDeleteItem.IsEnabled = false;
+            cmbItems.IsEnabled = false;
+            dpDate.IsEnabled = false;
+            btnSaveInvoice.IsEnabled = false;
+
+            txtInvoiceCost.Text = "";
+            txtItemCost.Text = "";
+
+            btnDeleteInvoice.IsEnabled = true;
+            btnEditInvoice.IsEnabled = true;
+
+            lblInvoiceNum.Content = invoiceNum;
         }
 
         /// <summary>

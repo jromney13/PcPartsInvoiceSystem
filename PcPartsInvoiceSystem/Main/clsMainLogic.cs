@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,6 +53,29 @@ namespace PcPartsInvoiceSystem.Main
                 throw ex;
             }
         }
+
+        public string AddInvoice(string invoiceDate, string totalCost, List<clsItem> itemList)
+        {
+            int iRet = 0;   //Number of return values
+
+            string statement = sql.InsertInvoice(invoiceDate, totalCost);
+
+            //Execute SQL statement
+            iRet = db.ExecuteNonQuery(sql.InsertInvoice(invoiceDate, totalCost));
+
+            string max = db.ExecuteScalarSQL(sql.GetLastInvoiceNumber());
+
+            int index = 1;
+            foreach (clsItem item in itemList)
+            {
+                db.ExecuteNonQuery(sql.InsertLineItem(max, index.ToString(), item.sItemCode));
+                index++;
+            }
+
+            return max;
+
+        }
+
 
     }
 }

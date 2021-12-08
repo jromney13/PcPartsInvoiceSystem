@@ -15,11 +15,11 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <DataGrid HorizontalAlignment="Left" Height="340" Margin="330,47,0,0" VerticalAlignment="Top" Width="408">
+        <DataGrid x:Name="dgMain" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="340" Margin="330,47,0,0" VerticalAlignment="Top" Width="408">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Code" Width="50" IsReadOnly="True" Binding="{Binding sItemCode}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Description" Width="250" Binding="{Binding sItemDescription}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Cost" Width="90" Binding="{Binding sItemCost}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Description" Width="250" IsReadOnly="True" Binding="{Binding sItemDescription}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Cost" Width="90" IsReadOnly="True" Binding="{Binding sItemCost}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Invoice Number:" HorizontalAlignment="Left" Margin="19,63,0,0" VerticalAlignment="Top"/>
