@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PcPartsInvoiceSystem.Main"
         mc:Ignorable="d"
-        Title="PC Parts Invoice System" Height="450" Width="800">
+        Title="PC Parts Invoice System" Height="450" Width="800" Background="#FFCCE0F2">
     <Grid>
         <DockPanel Margin="0,0,-0.4,393">
             <Menu DockPanel.Dock="Top">

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PcPartsInvoiceSystem.Items"
         mc:Ignorable="d"
-        Title="wndItems" Height="450" Width="800" Background="#FFE3EFFD">
+        Title="wndItems" Height="450" Width="800" Background="#FFCCE0F2">
     <Grid>
         <Label x:Name="lblItems" Content="Items" HorizontalAlignment="Left" Margin="56,35,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20"/>
         <DataGrid x:Name="dgItems" HorizontalAlignment="Center" Height="305" Margin="56,77,286,0" VerticalAlignment="Top" Width="450" AutoGenerateColumns="False" BorderBrush="Black" IsSynchronizedWithCurrentItem="False" SelectionMode="Single" SelectionChanged="dgItems_SelectionChanged">
