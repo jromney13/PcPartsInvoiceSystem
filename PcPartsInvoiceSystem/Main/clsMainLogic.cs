@@ -24,6 +24,11 @@ namespace PcPartsInvoiceSystem.Main
         clsMainSQL sql = new clsMainSQL();
 
         /// <summary>
+        /// List of Items
+        /// </summary>
+        List<clsItem> itemList;
+
+        /// <summary>
         /// Generates list of all items in the database
         /// </summary>
         /// <returns></returns>
@@ -31,7 +36,7 @@ namespace PcPartsInvoiceSystem.Main
         {
             try
             {
-                List<clsItem> itemList = new List<clsItem>();
+                itemList = new List<clsItem>();
 
                 DataSet ds;
 
