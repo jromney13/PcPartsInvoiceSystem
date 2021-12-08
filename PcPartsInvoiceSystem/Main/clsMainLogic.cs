@@ -73,7 +73,27 @@ namespace PcPartsInvoiceSystem.Main
             }
 
             return max;
+        }
 
+        public List<clsItem> GetInvoice(string invoiceNum)
+        {
+            List<clsItem> itemList = new List<clsItem>();
+
+            DataSet ds;
+
+            int iRet = 0;
+
+            string statement = sql.SelectInvoiceItems(invoiceNum);
+
+            ds = db.ExecuteSQLStatement(sql.SelectInvoiceItems(invoiceNum), ref iRet);
+
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                clsItem item = new clsItem(dr[0].ToString(), dr[1].ToString(), dr[2].ToString());
+                itemList.Add(item);
+            }
+
+            return itemList;
         }
 
 

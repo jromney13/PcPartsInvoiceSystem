@@ -64,6 +64,46 @@ namespace PcPartsInvoiceSystem.Main
 
         }
 
+        public wndMain(string invoiceNum)
+        {
+            try
+            {
+                InitializeComponent();
+
+                cmbItems.ItemsSource = mainLogic.GenerateItemList();
+
+                cmbItems.DisplayMemberPath = "sItemDescription";
+                cmbItems.SelectedValuePath = "sItemDescription";
+
+                dgMain.ItemsSource = itemList;
+
+                btnAddItem.IsEnabled = false;
+                btnDeleteItem.IsEnabled = false;
+                cmbItems.IsEnabled = false;
+                dpDate.IsEnabled = false;
+                btnSaveInvoice.IsEnabled = false;
+
+                txtInvoiceCost.Text = "";
+                txtItemCost.Text = "";
+
+                btnDeleteInvoice.IsEnabled = true;
+                btnEditInvoice.IsEnabled = true;
+
+                lblInvoiceNum.Content = invoiceNum;
+
+                itemList = mainLogic.GetInvoice(invoiceNum);
+
+                dgMain.ItemsSource = itemList;
+
+            }
+            catch (Exception ex)
+            {
+                //Top Level: Handle Exception
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+
+        }
+
         /// <summary>
         /// Opens the seach window to search for invoices
         /// </summary>
@@ -75,6 +115,7 @@ namespace PcPartsInvoiceSystem.Main
             {
                 searchWindow = new wndSearch();
                 searchWindow.ShowDialog();
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -95,6 +136,7 @@ namespace PcPartsInvoiceSystem.Main
             try
             {
                 itemsWindow = new wndItems();
+                itemsWindow.Closed += UpdateItems;
                 itemsWindow.ShowDialog();
             }
             catch (Exception ex)
@@ -114,6 +156,10 @@ namespace PcPartsInvoiceSystem.Main
             try
             {
                 clsItem selectedItem = (clsItem)cmbItems.SelectedItem;
+                if(selectedItem == null)
+                {
+                    return;
+                }
                 txtItemCost.Text = selectedItem.sItemCost;
             }
             catch (Exception ex)
@@ -245,17 +291,7 @@ namespace PcPartsInvoiceSystem.Main
 
         }
 
-        /// <summary>
-        /// Called when the items window is closed. Runs SQL query to refill combo box to ensure all items are present.
-        /// </summary>
-        public void checkItemUpdates()
-        {
-            // Call logic class method that runs SQL statement
-
-            // Update item combo box
-
-        }
-
+       
         /// <summary>
         /// Called when the search window is closed. SQL statement is run to gather items in invoice and display them in datagrid.
         /// </summary>
@@ -286,6 +322,22 @@ namespace PcPartsInvoiceSystem.Main
                 System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
                                              "HandleError Exception: " + ex.Message);
             }
+        }
+
+        public void btnNewInvoice_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Called when the items window is closed. Runs SQL query to refill combo box to ensure all items are present.
+        /// </summary>
+        public void UpdateItems(object sender, System.EventArgs e)
+        {
+            cmbItems.ItemsSource = mainLogic.GenerateItemList();
+
+            cmbItems.DisplayMemberPath = "sItemDescription";
+            cmbItems.SelectedValuePath = "sItemDescription";
         }
     }
 }

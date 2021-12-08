@@ -41,8 +41,8 @@ namespace PcPartsInvoiceSystem.Main
         public string SelectInvoiceItems(string invoiceNum)
         {
             string sSQL = "SELECT ItemDesc.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost" +
-                "FROM ItemDesc INNER JOIN LineItems ON ItemDesc.ItemCode = LineItems.ItemCode" +
-                "WHERE LineItems.InvoiceNum = " + invoiceNum;
+                " FROM ItemDesc INNER JOIN LineItems ON ItemDesc.ItemCode = LineItems.ItemCode" +
+                " WHERE LineItems.InvoiceNum = " + invoiceNum;
 
             return sSQL;
         }

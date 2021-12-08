@@ -29,6 +29,9 @@ namespace PcPartsInvoiceSystem.Search
         /// Constructor for window
         /// runs the loadDataGrid method on start using the starting sql which should be all records of invoices
         /// </summary>
+        /// 
+        private bool submitted = false;
+
         public wndSearch()
         {
             InitializeComponent();
@@ -146,15 +149,21 @@ namespace PcPartsInvoiceSystem.Search
         {
             try
             {
-                List<String> row = new List<String>();
-                if (invoiceDataGrid.SelectedItems.Count > 0)
-                {
-                    for (int i = 0; i < invoiceDataGrid.SelectedItems.Count; i++)
-                    {
-                        List<String> selectedFile = (List<String>)invoiceDataGrid.SelectedItems[i];
-                        row = selectedFile;
-                    }
-                }
+                //List<String> row = new List<String>();
+                //if (invoiceDataGrid.SelectedItems.Count > 0)
+                //{
+                //    for (int i = 0; i < invoiceDataGrid.SelectedItems.Count; i++)
+                //    {
+                //        List<String> selectedFile = (List<String>)invoiceDataGrid.SelectedItems[i];
+                //        row = selectedFile;
+                //    }
+                //}
+
+                submitted = true;
+                string invoiceNum = invoiceNumBox.SelectedItem.ToString();
+                wndMain wndMain = new wndMain(invoiceNum);
+                wndMain.Show();
+                this.Close();
             }
             catch (Exception ex) 
             {
@@ -268,6 +277,16 @@ namespace PcPartsInvoiceSystem.Search
             {
                 Console.WriteLine(ex);
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (!submitted)
+            {
+                wndMain wndMain = new wndMain();
+                wndMain.Show();
+            }
+
         }
     }
 }

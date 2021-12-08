@@ -30,12 +30,13 @@
         <Label Content="Items:" HorizontalAlignment="Left" Margin="75,114,0,0" VerticalAlignment="Top"/>
         <Label Content="Item Cost:" HorizontalAlignment="Left" Margin="52,145,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtItemCost" HorizontalAlignment="Left" Height="23" Margin="138,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="102" IsReadOnly="True"/>
-        <Button x:Name="btnSaveInvoice" Content="Save Invoice" HorizontalAlignment="Left" Margin="124,280,0,0" VerticalAlignment="Top" Width="100" Height="34" Click="btnSaveInvoice_Click"/>
+        <Button x:Name="btnSaveInvoice" Content="Save Invoice" HorizontalAlignment="Left" Margin="119,267,0,0" VerticalAlignment="Top" Width="100" Height="34" Click="btnSaveInvoice_Click" RenderTransformOrigin="0.252,0.676"/>
         <Button x:Name="btnAddItem" Content="Add Item" HorizontalAlignment="Left" Margin="61,219,0,0" VerticalAlignment="Top" Width="100" Height="34" Click="btnAddItem_Click"/>
         <Button x:Name="btnDeleteItem" Content="Delete Item" HorizontalAlignment="Left" Margin="182,219,0,0" VerticalAlignment="Top" Width="100" Height="34" Click="btnDeleteItem_Click"/>
-        <Button x:Name="btnEditInvoice" Content="Edit Invoice" HorizontalAlignment="Left" Margin="38,353,0,0" VerticalAlignment="Top" Width="100" Height="34" Click="btnEditInvoice_Click" IsEnabled="False"/>
-        <Button x:Name="btnDeleteInvoice" Content="Delete Invoice" HorizontalAlignment="Left" Margin="194,353,0,0" VerticalAlignment="Top" Width="100" Height="34" Click="btnDeleteInvoice_Click" IsEnabled="False"/>
+        <Button x:Name="btnEditInvoice" Content="Edit Invoice" HorizontalAlignment="Left" Margin="61,365,0,0" VerticalAlignment="Top" Width="100" Height="34" Click="btnEditInvoice_Click" IsEnabled="False" RenderTransformOrigin="0.5,0.765"/>
+        <Button x:Name="btnDeleteInvoice" Content="Delete Invoice" HorizontalAlignment="Left" Margin="182,365,0,0" VerticalAlignment="Top" Width="100" Height="34" Click="btnDeleteInvoice_Click" IsEnabled="False"/>
         <TextBox x:Name="txtInvoiceCost" HorizontalAlignment="Left" Height="23" Margin="138,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="102" IsReadOnly="True"/>
         <Label Content="Invoice Total:" HorizontalAlignment="Left" Margin="38,175,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.383,0.547"/>
+        <Button x:Name="btnNewInvoice" Content="New Invoice" HorizontalAlignment="Left" Height="34" Margin="119,315,0,0" VerticalAlignment="Top" Width="100" IsEnabled="False" Click="btnNewInvoice_Click" />
     </Grid>
 </Window>
