@@ -161,7 +161,7 @@ namespace PcPartsInvoiceSystem.Search
                 if (invoiceDataGrid.SelectedItem != null) 
                 {
                     List<string> invoiceString = (List<string>)invoiceDataGrid.SelectedItem;
-                    wndMain wndMain = new wndMain(invoiceString[0]);
+                    wndMain wndMain = new wndMain(invoiceString[0], invoiceString[1]);
                     wndMain.Show();
                     this.Close();
 

@@ -101,6 +101,15 @@ namespace PcPartsInvoiceSystem.Main
             return itemList;
         }
 
+        public void DeleteInvoice(string invoiceNum)
+        {
+            int iRet = 0;   //Number of return values
 
+            //Execute SQL statement
+            iRet = db.ExecuteNonQuery(sql.DeleteLineItems(invoiceNum));
+
+            iRet = db.ExecuteNonQuery(sql.DeleteInvoices(invoiceNum));
+
+        }
     }
 }

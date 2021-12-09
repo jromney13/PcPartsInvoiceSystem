@@ -52,6 +52,9 @@ namespace PcPartsInvoiceSystem.Main
                 cmbItems.ItemsSource = mainLogic.GenerateItemList();
 
                 dgMain.ItemsSource = itemList;
+
+                dpDate.SelectedDate = DateTime.Now.Date;
+
             }
             catch (Exception ex)
             {
@@ -61,7 +64,7 @@ namespace PcPartsInvoiceSystem.Main
 
         }
 
-        public wndMain(string invoiceNum)
+        public wndMain(string invoiceNum, string invoiceDate)
         {
             try
             {
@@ -85,13 +88,16 @@ namespace PcPartsInvoiceSystem.Main
 
                 btnDeleteInvoice.IsEnabled = true;
                 btnEditInvoice.IsEnabled = true;
+                btnNewInvoice.IsEnabled = true;
 
                 lblInvoiceNum.Content = invoiceNum;
+                
+                DateTime dt = DateTime.ParseExact(invoiceDate, "M/d/yyyy", CultureInfo.InvariantCulture);
+                dpDate.SelectedDate = dt;
 
                 itemList = mainLogic.GetInvoice(invoiceNum);
 
                 dgMain.ItemsSource = itemList;
-
             }
             catch (Exception ex)
             {
@@ -285,21 +291,29 @@ namespace PcPartsInvoiceSystem.Main
         /// <param name="e"></param>
         private void btnDeleteInvoice_Click(object sender, RoutedEventArgs e)
         {
+            string invoiceNum = lblInvoiceNum.Content.ToString();
+            mainLogic.DeleteInvoice(invoiceNum);
 
+            dgMain.ItemsSource = null;
+            dgMain.Items.Refresh();
+
+            itemList.Clear();
+            invoiceTotal = 0;
+            dgMain.ItemsSource = itemList;
+            dgMain.Items.Refresh();
+
+            lblInvoiceNum.Content = "TBD";
+
+            btnAddItem.IsEnabled = true;
+            btnDeleteItem.IsEnabled = true;
+            cmbItems.IsEnabled = true;
+            dpDate.IsEnabled = true;
+            btnSaveInvoice.IsEnabled = true;
+
+            btnEditInvoice.IsEnabled = false;
+            btnDeleteInvoice.IsEnabled = false;
         }
 
-       
-        /// <summary>
-        /// Called when the search window is closed. SQL statement is run to gather items in invoice and display them in datagrid.
-        /// </summary>
-        public void selectInvoice(string invoiceId)
-        {
-            // Calls logic clss method that runs SQL statement
-
-            // Updates datagrid
-
-            // Updates invoice number label and total cost.
-        }
 
         /// <summary>
         /// Handles any exceptions which cause an error in the program. Shows a message box to pinpoint the method which caused the error.
@@ -323,7 +337,9 @@ namespace PcPartsInvoiceSystem.Main
 
         public void btnNewInvoice_Click(object sender, RoutedEventArgs e)
         {
-
+            wndMain newMain = new wndMain();
+            newMain.Show();
+            this.Close();
         }
 
         /// <summary>
