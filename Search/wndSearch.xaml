@@ -1,0 +1,32 @@
+﻿<Window x:Class="PcPartsInvoiceSystem.Search.wndSearch"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PcPartsInvoiceSystem.Search"
+        mc:Ignorable="d"
+        Title="Search" Height="450" Width="800" Background="#FFCCE0F2">
+    <Grid>
+        <Grid HorizontalAlignment="Left" Height="253" Margin="10,10,0,0" VerticalAlignment="Top" Width="350">
+            <Rectangle Fill="#FFDEDEDE" Stroke="White"/>
+            <Button x:Name="selectButton" Content="Select" HorizontalAlignment="Left" Margin="265,52,0,0" VerticalAlignment="Top" Width="75" Background="White" Click="selectButton_Click"/>
+            <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="10,211,0,0" VerticalAlignment="Top" Width="75" Background="White" Click="cancelButton_Click"/>
+            <ComboBox x:Name="invoiceNumBox" HorizontalAlignment="Left" Margin="121,10,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="invoiceNumBox_DropDownClosed"/>
+            <ComboBox x:Name="invoiceDateBox" HorizontalAlignment="Left" Margin="121,50,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="invoiceDateBox_DropDownClosed"/>
+            <ComboBox x:Name="invoiceCostBox" HorizontalAlignment="Left" Margin="121,90,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="invoiceCostBox_DropDownClosed"/>
+            <Button x:Name="clearButton" Content="Clear" HorizontalAlignment="Left" Margin="10,141,0,0" VerticalAlignment="Top" Width="75" Background="White" Click="clearButton_Click"/>
+            <Label Content="Invoice Number:" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right"/>
+            <Label Content="Invoice Date:" HorizontalAlignment="Left" Margin="29,46,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right"/>
+            <Label Content="Invoice Cost:" HorizontalAlignment="Left" Margin="30,86,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right"/>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="399" Margin="440,10,0,0" VerticalAlignment="Top" Width="342">
+            <DataGrid x:Name="invoiceDataGrid" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header= "Invoice Number" Binding= "{Binding [0]}"/>
+                    <DataGridTextColumn Header= "Invoice Date" Binding= "{Binding [1]}"/>
+                    <DataGridTextColumn Header= "Invoice Cost" Binding= "{Binding [2]}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>
