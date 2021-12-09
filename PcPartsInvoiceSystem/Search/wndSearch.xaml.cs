@@ -158,12 +158,18 @@ namespace PcPartsInvoiceSystem.Search
                 //        row = selectedFile;
                 //    }
                 //}
+                if (invoiceDataGrid.SelectedItem != null) 
+                {
+                    List<string> invoiceString = (List<string>)invoiceDataGrid.SelectedItem;
+                    wndMain wndMain = new wndMain(invoiceString[0]);
+                    wndMain.Show();
+                    this.Close();
 
+                }
+                
                 submitted = true;
-                string invoiceNum = invoiceNumBox.SelectedItem.ToString();
-                wndMain wndMain = new wndMain(invoiceNum);
-                wndMain.Show();
-                this.Close();
+                //string invoiceNum = invoiceNumBox.SelectedItem.ToString();
+
             }
             catch (Exception ex) 
             {

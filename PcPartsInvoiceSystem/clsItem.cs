@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace PcPartsInvoiceSystem.Items
 {
@@ -51,6 +52,23 @@ namespace PcPartsInvoiceSystem.Items
             this.sItemCost = sItemCost;
         }
 
+        /// <summary>
+        /// Overrides ToString() to display an item's description
+        /// "First Last"
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            try
+            {
+                return sItemDescription;
+            }
+            catch (Exception ex)
+            {
+                //Calling Method: Throw error
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
 
     }
 }

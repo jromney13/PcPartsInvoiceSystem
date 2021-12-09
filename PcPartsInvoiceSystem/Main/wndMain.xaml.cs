@@ -51,9 +51,6 @@ namespace PcPartsInvoiceSystem.Main
 
                 cmbItems.ItemsSource = mainLogic.GenerateItemList();
 
-                cmbItems.DisplayMemberPath = "sItemDescription";
-                cmbItems.SelectedValuePath = "sItemDescription";
-
                 dgMain.ItemsSource = itemList;
             }
             catch (Exception ex)
