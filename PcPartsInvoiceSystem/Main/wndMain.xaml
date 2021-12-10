@@ -15,7 +15,7 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <DataGrid x:Name="dgMain" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="340" Margin="330,47,0,0" VerticalAlignment="Top" Width="408">
+        <DataGrid x:Name="dgMain" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="340" Margin="330,47,0,0" VerticalAlignment="Top" Width="408" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Code" Width="50" IsReadOnly="True" Binding="{Binding sItemCode}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Description" Width="250" IsReadOnly="True" Binding="{Binding sItemDescription}"></DataGridTextColumn>

@@ -15,7 +15,7 @@ namespace PcPartsInvoiceSystem.Search
         /// <summary>
         /// int of invoice cost that is selected, if none selected value is -1
         /// </summary>
-        private int invoiceCost;
+        private double invoiceCost;
         /// <summary>
         /// int of invoice number that is selected, if none selected value is -1
         /// </summary>
@@ -92,7 +92,7 @@ namespace PcPartsInvoiceSystem.Search
         /// sets invoice cost
         /// </summary>
         /// <param name="invoiceCost"></param>
-        public void UpdateInvoiceCost(int invoiceCost) 
+        public void UpdateInvoiceCost(double invoiceCost) 
         {
             this.invoiceCost = invoiceCost;
         }

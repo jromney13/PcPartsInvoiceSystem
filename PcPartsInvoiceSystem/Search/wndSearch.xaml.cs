@@ -25,13 +25,16 @@ namespace PcPartsInvoiceSystem.Search
         /// object of the logic class for the search window
         /// </summary>
         private clsSearchLogic datalogic;
+
+        /// <summary>
+        /// bool that lets the main window know if an invoice has been selected
+        /// </summary>
+        private bool selected = false;
+
         /// <summary>
         /// Constructor for window
         /// runs the loadDataGrid method on start using the starting sql which should be all records of invoices
         /// </summary>
-        /// 
-        private bool submitted = false;
-
         public wndSearch()
         {
             InitializeComponent();
@@ -167,7 +170,7 @@ namespace PcPartsInvoiceSystem.Search
 
                 }
                 
-                submitted = true;
+                selected = true;
                 //string invoiceNum = invoiceNumBox.SelectedItem.ToString();
 
             }
@@ -229,8 +232,8 @@ namespace PcPartsInvoiceSystem.Search
             {
                 if (invoiceCostBox.SelectedItem != null)
                 {
-                    int i;
-                    Int32.TryParse(invoiceCostBox.SelectedItem.ToString(), out i);
+                    double i;
+                    Double.TryParse(invoiceCostBox.SelectedItem.ToString(), out i);
                     datalogic.UpdateInvoiceCost(i);
                     loadDataGrid(datalogic.SQLGen());
                 }
@@ -285,9 +288,14 @@ namespace PcPartsInvoiceSystem.Search
             }
         }
 
+        public bool IsSelected()
+        {
+            return selected;
+        }
+
         private void Window_Closed(object sender, EventArgs e)
         {
-            if (!submitted)
+            if (!selected)
             {
                 wndMain wndMain = new wndMain();
                 wndMain.Show();
