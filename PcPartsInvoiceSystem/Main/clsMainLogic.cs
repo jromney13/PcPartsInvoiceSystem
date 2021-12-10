@@ -111,5 +111,35 @@ namespace PcPartsInvoiceSystem.Main
             iRet = db.ExecuteNonQuery(sql.DeleteInvoices(invoiceNum));
 
         }
+
+        public void DeleteLines(string invoiceNum)
+        {
+            int iRet = 0;   //Number of return values
+
+            //Execute SQL statement
+            iRet = db.ExecuteNonQuery(sql.DeleteLineItems(invoiceNum));
+        }
+
+
+        public void AddLines(string totalCost, List<clsItem> itemList, string invoiceNum, string invoiceDate)
+        {
+            int iRet = 0;   //Number of return values
+
+            //Update total cost
+            iRet = db.ExecuteNonQuery(sql.UpdateTotalCost(totalCost, invoiceNum));
+
+            // update lines
+            int index = 1;
+            foreach (clsItem item in itemList)
+            {
+                db.ExecuteNonQuery(sql.InsertLineItem(invoiceNum, index.ToString(), item.sItemCode));
+                index++;
+            }
+
+            //update date
+            iRet = db.ExecuteNonQuery(sql.UpdateInvoiceDate(invoiceDate, invoiceNum));
+
+
+        }
     }
 }

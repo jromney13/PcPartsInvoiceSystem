@@ -98,6 +98,16 @@ namespace PcPartsInvoiceSystem.Main
                 itemList = mainLogic.GetInvoice(invoiceNum);
 
                 dgMain.ItemsSource = itemList;
+
+                invoiceTotal = 0;
+
+                foreach(clsItem item in itemList)
+                {
+                    Double.TryParse(item.sItemCost, out double result);
+                    invoiceTotal += result;
+                }
+
+                txtInvoiceCost.Text = invoiceTotal.ToString();
             }
             catch (Exception ex)
             {
@@ -257,7 +267,17 @@ namespace PcPartsInvoiceSystem.Main
             DateTime date = (DateTime)dpDate.SelectedDate;
             string sDate = date.ToString("d", CultureInfo.GetCultureInfo("en-US"));
 
-            string invoiceNum = mainLogic.AddInvoice(sDate, invoiceTotal.ToString(), itemList);
+            if (lblInvoiceNum.Content.ToString() != "TBD")
+            {
+                mainLogic.DeleteLines(lblInvoiceNum.Content.ToString());
+
+                mainLogic.AddLines(invoiceTotal.ToString(), itemList, lblInvoiceNum.Content.ToString(), sDate);
+            }
+            else
+            {
+                string invoiceNum = mainLogic.AddInvoice(sDate, invoiceTotal.ToString(), itemList);
+                lblInvoiceNum.Content = invoiceNum;
+            }
 
             btnAddItem.IsEnabled = false;
             btnDeleteItem.IsEnabled = false;
@@ -265,13 +285,12 @@ namespace PcPartsInvoiceSystem.Main
             dpDate.IsEnabled = false;
             btnSaveInvoice.IsEnabled = false;
 
-            txtInvoiceCost.Text = "";
             txtItemCost.Text = "";
 
             btnDeleteInvoice.IsEnabled = true;
             btnEditInvoice.IsEnabled = true;
+            btnNewInvoice.IsEnabled = true;
 
-            lblInvoiceNum.Content = invoiceNum;
         }
 
         /// <summary>
@@ -281,7 +300,15 @@ namespace PcPartsInvoiceSystem.Main
         /// <param name="e"></param>
         private void btnEditInvoice_Click(object sender, RoutedEventArgs e)
         {
-            
+            btnAddItem.IsEnabled = true;
+            btnDeleteItem.IsEnabled = true;
+            cmbItems.IsEnabled = true;
+            dpDate.IsEnabled = true;
+            btnSaveInvoice.IsEnabled = true;
+
+            btnEditInvoice.IsEnabled = false;
+            btnDeleteInvoice.IsEnabled = false;
+            btnNewInvoice.IsEnabled = false;
         }
 
         /// <summary>
@@ -303,6 +330,8 @@ namespace PcPartsInvoiceSystem.Main
             dgMain.Items.Refresh();
 
             lblInvoiceNum.Content = "TBD";
+            txtInvoiceCost.Text = "";
+
 
             btnAddItem.IsEnabled = true;
             btnDeleteItem.IsEnabled = true;
@@ -312,6 +341,7 @@ namespace PcPartsInvoiceSystem.Main
 
             btnEditInvoice.IsEnabled = false;
             btnDeleteInvoice.IsEnabled = false;
+            btnNewInvoice.IsEnabled = false;
         }
 
 

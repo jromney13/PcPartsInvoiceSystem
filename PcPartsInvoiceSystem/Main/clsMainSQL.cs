@@ -118,5 +118,11 @@ namespace PcPartsInvoiceSystem.Main
             return sSQL;
         }
 
+        public string UpdateInvoiceDate(string invoiceDate, string invoiceNum)
+        {
+            string sSQL = "UPDATE Invoices SET InvoiceDate = #" + invoiceDate + "# WHERE InvoiceNum = " + invoiceNum;
+
+            return sSQL;
+        }
     }
 }
