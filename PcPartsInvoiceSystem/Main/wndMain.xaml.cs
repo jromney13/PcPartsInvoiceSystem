@@ -139,7 +139,12 @@ namespace PcPartsInvoiceSystem.Main
             {
                 searchWindow = new wndSearch();
                 searchWindow.ShowDialog();
-                this.Close();
+
+                //If an invoice is selected, then close this window
+                if (searchWindow.IsSelected())
+                {
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {
@@ -223,6 +228,9 @@ namespace PcPartsInvoiceSystem.Main
 
                 txtInvoiceCost.Text = invoiceTotal.ToString();
 
+                //Deselect Datagrid
+                dgMain.SelectedItem = null;
+
             }
             catch (Exception ex)
             {
@@ -239,7 +247,7 @@ namespace PcPartsInvoiceSystem.Main
         {
             try
             {
-                if (dgMain.SelectedItem != null)
+                if (dgMain.SelectedItem != null && dgMain.SelectedIndex < dgMain.Items.Count - 1)
                 {
                     Double.TryParse(((clsItem)dgMain.SelectedItem).sItemCost, out double itemCost);
                     invoiceTotal -= itemCost;
@@ -253,7 +261,9 @@ namespace PcPartsInvoiceSystem.Main
                     {
                         txtInvoiceCost.Text = "0";
                     }
-                    
+
+                    //Deselect Datagrid
+                    dgMain.SelectedItem = null;
 
                 }
             }
