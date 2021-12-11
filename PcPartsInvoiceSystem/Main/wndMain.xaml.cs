@@ -36,8 +36,14 @@ namespace PcPartsInvoiceSystem.Main
         /// </summary>
         clsMainLogic mainLogic = new clsMainLogic();
 
+        /// <summary>
+        /// List that stores items to be displayed in the invoice datagrid.
+        /// </summary>
         List<clsItem> itemList = new List<clsItem>();
 
+        /// <summary>
+        /// Invoice Total
+        /// </summary>
         double invoiceTotal = 0;
 
         /// <summary>
@@ -64,6 +70,11 @@ namespace PcPartsInvoiceSystem.Main
 
         }
 
+        /// <summary>
+        /// Constructor used to pass data from the search window to the main window. Displays invoice from search window.
+        /// </summary>
+        /// <param name="invoiceNum"></param>
+        /// <param name="invoiceDate"></param>
         public wndMain(string invoiceNum, string invoiceDate)
         {
             try
@@ -259,38 +270,44 @@ namespace PcPartsInvoiceSystem.Main
         /// <param name="e"></param>
         private void btnSaveInvoice_Click(object sender, RoutedEventArgs e)
         {
-            if(dgMain.Items.Count - 1 == 0 || dpDate.SelectedDate == null)
+            try
             {
-                return;
+                if (dgMain.Items.Count - 1 == 0 || dpDate.SelectedDate == null)
+                {
+                    return;
+                }
+
+                DateTime date = (DateTime)dpDate.SelectedDate;
+                string sDate = date.ToString("d", CultureInfo.GetCultureInfo("en-US"));
+
+                if (lblInvoiceNum.Content.ToString() != "TBD")
+                {
+                    mainLogic.DeleteLines(lblInvoiceNum.Content.ToString());
+
+                    mainLogic.AddLines(invoiceTotal.ToString(), itemList, lblInvoiceNum.Content.ToString(), sDate);
+                }
+                else
+                {
+                    string invoiceNum = mainLogic.AddInvoice(sDate, invoiceTotal.ToString(), itemList);
+                    lblInvoiceNum.Content = invoiceNum;
+                }
+
+                btnAddItem.IsEnabled = false;
+                btnDeleteItem.IsEnabled = false;
+                cmbItems.IsEnabled = false;
+                dpDate.IsEnabled = false;
+                btnSaveInvoice.IsEnabled = false;
+
+                txtItemCost.Text = "";
+
+                btnDeleteInvoice.IsEnabled = true;
+                btnEditInvoice.IsEnabled = true;
+                btnNewInvoice.IsEnabled = true;
             }
-
-            DateTime date = (DateTime)dpDate.SelectedDate;
-            string sDate = date.ToString("d", CultureInfo.GetCultureInfo("en-US"));
-
-            if (lblInvoiceNum.Content.ToString() != "TBD")
+            catch(Exception ex)
             {
-                mainLogic.DeleteLines(lblInvoiceNum.Content.ToString());
-
-                mainLogic.AddLines(invoiceTotal.ToString(), itemList, lblInvoiceNum.Content.ToString(), sDate);
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
-            else
-            {
-                string invoiceNum = mainLogic.AddInvoice(sDate, invoiceTotal.ToString(), itemList);
-                lblInvoiceNum.Content = invoiceNum;
-            }
-
-            btnAddItem.IsEnabled = false;
-            btnDeleteItem.IsEnabled = false;
-            cmbItems.IsEnabled = false;
-            dpDate.IsEnabled = false;
-            btnSaveInvoice.IsEnabled = false;
-
-            txtItemCost.Text = "";
-
-            btnDeleteInvoice.IsEnabled = true;
-            btnEditInvoice.IsEnabled = true;
-            btnNewInvoice.IsEnabled = true;
-
         }
 
         /// <summary>
@@ -300,15 +317,22 @@ namespace PcPartsInvoiceSystem.Main
         /// <param name="e"></param>
         private void btnEditInvoice_Click(object sender, RoutedEventArgs e)
         {
-            btnAddItem.IsEnabled = true;
-            btnDeleteItem.IsEnabled = true;
-            cmbItems.IsEnabled = true;
-            dpDate.IsEnabled = true;
-            btnSaveInvoice.IsEnabled = true;
+            try
+            {
+                btnAddItem.IsEnabled = true;
+                btnDeleteItem.IsEnabled = true;
+                cmbItems.IsEnabled = true;
+                dpDate.IsEnabled = true;
+                btnSaveInvoice.IsEnabled = true;
 
-            btnEditInvoice.IsEnabled = false;
-            btnDeleteInvoice.IsEnabled = false;
-            btnNewInvoice.IsEnabled = false;
+                btnEditInvoice.IsEnabled = false;
+                btnDeleteInvoice.IsEnabled = false;
+                btnNewInvoice.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
 
         /// <summary>
@@ -318,30 +342,37 @@ namespace PcPartsInvoiceSystem.Main
         /// <param name="e"></param>
         private void btnDeleteInvoice_Click(object sender, RoutedEventArgs e)
         {
-            string invoiceNum = lblInvoiceNum.Content.ToString();
-            mainLogic.DeleteInvoice(invoiceNum);
+            try
+            {
+                string invoiceNum = lblInvoiceNum.Content.ToString();
+                mainLogic.DeleteInvoice(invoiceNum);
 
-            dgMain.ItemsSource = null;
-            dgMain.Items.Refresh();
+                dgMain.ItemsSource = null;
+                dgMain.Items.Refresh();
 
-            itemList.Clear();
-            invoiceTotal = 0;
-            dgMain.ItemsSource = itemList;
-            dgMain.Items.Refresh();
+                itemList.Clear();
+                invoiceTotal = 0;
+                dgMain.ItemsSource = itemList;
+                dgMain.Items.Refresh();
 
-            lblInvoiceNum.Content = "TBD";
-            txtInvoiceCost.Text = "";
+                lblInvoiceNum.Content = "TBD";
+                txtInvoiceCost.Text = "";
 
 
-            btnAddItem.IsEnabled = true;
-            btnDeleteItem.IsEnabled = true;
-            cmbItems.IsEnabled = true;
-            dpDate.IsEnabled = true;
-            btnSaveInvoice.IsEnabled = true;
+                btnAddItem.IsEnabled = true;
+                btnDeleteItem.IsEnabled = true;
+                cmbItems.IsEnabled = true;
+                dpDate.IsEnabled = true;
+                btnSaveInvoice.IsEnabled = true;
 
-            btnEditInvoice.IsEnabled = false;
-            btnDeleteInvoice.IsEnabled = false;
-            btnNewInvoice.IsEnabled = false;
+                btnEditInvoice.IsEnabled = false;
+                btnDeleteInvoice.IsEnabled = false;
+                btnNewInvoice.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
 
 
@@ -365,11 +396,23 @@ namespace PcPartsInvoiceSystem.Main
             }
         }
 
+        /// <summary>
+        /// Creates a new invoice in the main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void btnNewInvoice_Click(object sender, RoutedEventArgs e)
         {
-            wndMain newMain = new wndMain();
-            newMain.Show();
-            this.Close();
+            try
+            {
+                wndMain newMain = new wndMain();
+                newMain.Show();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
 
         /// <summary>
@@ -377,10 +420,17 @@ namespace PcPartsInvoiceSystem.Main
         /// </summary>
         public void UpdateItems(object sender, System.EventArgs e)
         {
-            cmbItems.ItemsSource = mainLogic.GenerateItemList();
+            try
+            {
+                cmbItems.ItemsSource = mainLogic.GenerateItemList();
 
-            cmbItems.DisplayMemberPath = "sItemDescription";
-            cmbItems.SelectedValuePath = "sItemDescription";
+                cmbItems.DisplayMemberPath = "sItemDescription";
+                cmbItems.SelectedValuePath = "sItemDescription";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

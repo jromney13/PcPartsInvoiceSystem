@@ -13,11 +13,17 @@ namespace PcPartsInvoiceSystem.Main
         /// </summary>
         /// <returns></returns>
         public string SelectAllItemData()
-
         {
-            string sSQL = "SELECT * FROM ItemDesc";
+            try
+            {
+                string sSQL = "SELECT * FROM ItemDesc";
 
-            return sSQL;
+                return sSQL;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
 
         }
 
@@ -28,9 +34,16 @@ namespace PcPartsInvoiceSystem.Main
         /// <returns></returns>
         public string SelectInvoiceData(string invoiceNum)
         {
-            string sSQL = "SELECT * FROM Invoices WHERE InvoiceNum = " + invoiceNum;
+            try
+            {
+                string sSQL = "SELECT * FROM Invoices WHERE InvoiceNum = " + invoiceNum;
 
-            return sSQL;
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -40,11 +53,18 @@ namespace PcPartsInvoiceSystem.Main
         /// <returns></returns>
         public string SelectInvoiceItems(string invoiceNum)
         {
-            string sSQL = "SELECT ItemDesc.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost" +
-                " FROM ItemDesc INNER JOIN LineItems ON ItemDesc.ItemCode = LineItems.ItemCode" +
-                " WHERE LineItems.InvoiceNum = " + invoiceNum;
+            try
+            {
+                string sSQL = "SELECT ItemDesc.ItemCode, ItemDesc.ItemDesc, ItemDesc.Cost" +
+                    " FROM ItemDesc INNER JOIN LineItems ON ItemDesc.ItemCode = LineItems.ItemCode" +
+                    " WHERE LineItems.InvoiceNum = " + invoiceNum;
 
-            return sSQL;
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -54,9 +74,16 @@ namespace PcPartsInvoiceSystem.Main
         /// <returns></returns>
         public string DeleteLineItems(string invoiceNum)
         {
-            string sSQL = "DELETE From LineItems WHERE InvoiceNum = " + invoiceNum;
+            try
+            {
+                string sSQL = "DELETE From LineItems WHERE InvoiceNum = " + invoiceNum;
 
-            return sSQL;
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -66,9 +93,16 @@ namespace PcPartsInvoiceSystem.Main
         /// <returns></returns>
         public string DeleteInvoices(string invoiceNum)
         {
-            string sSQL = "DELETE From Invoices WHERE InvoiceNum = " + invoiceNum;
+            try
+            {
+                string sSQL = "DELETE From Invoices WHERE InvoiceNum = " + invoiceNum;
 
-            return sSQL;
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -80,9 +114,16 @@ namespace PcPartsInvoiceSystem.Main
         /// <returns></returns>
         public string InsertLineItem(string invoiceNum, string lineItemNum, string itemCode)
         {
-            string sSQL = "INSERT INTO LineItems(InvoiceNum, LineItemNum, ItemCode) Values(" + invoiceNum + ", " + lineItemNum + ", \'" + itemCode + "\')";
+            try
+            {
+                string sSQL = "INSERT INTO LineItems(InvoiceNum, LineItemNum, ItemCode) Values(" + invoiceNum + ", " + lineItemNum + ", \'" + itemCode + "\')";
 
-            return sSQL;
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -93,9 +134,16 @@ namespace PcPartsInvoiceSystem.Main
         /// <returns></returns>
         public string InsertInvoice(string invoiceDate, string totalCost)
         {
-            string sSQL = "INSERT INTO Invoices(InvoiceDate, TotalCost) Values(#" + invoiceDate + "#, " + totalCost + ")";
+            try
+            {
+                string sSQL = "INSERT INTO Invoices(InvoiceDate, TotalCost) Values(#" + invoiceDate + "#, " + totalCost + ")";
 
-            return sSQL;
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -106,23 +154,54 @@ namespace PcPartsInvoiceSystem.Main
         /// <returns></returns>
         public string UpdateTotalCost(string totalCost, string invoiceNum)
         {
-            string sSQL = "UPDATE Invoices SET TotalCost = " + totalCost + " WHERE InvoiceNum = " + invoiceNum;
+            try
+            {
+                string sSQL = "UPDATE Invoices SET TotalCost = " + totalCost + " WHERE InvoiceNum = " + invoiceNum;
 
-            return sSQL;
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
+        /// <summary>
+        /// Gets the last inserted invoice number.
+        /// </summary>
+        /// <returns></returns>
         public string GetLastInvoiceNumber()
         {
-            string sSQL = "SELECT MAX(InvoiceNum) FROM Invoices";
+            try
+            {
+                string sSQL = "SELECT MAX(InvoiceNum) FROM Invoices";
 
-            return sSQL;
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
+        /// <summary>
+        /// Updates the invoice date in the db.
+        /// </summary>
+        /// <param name="invoiceDate"></param>
+        /// <param name="invoiceNum"></param>
+        /// <returns></returns>
         public string UpdateInvoiceDate(string invoiceDate, string invoiceNum)
         {
-            string sSQL = "UPDATE Invoices SET InvoiceDate = #" + invoiceDate + "# WHERE InvoiceNum = " + invoiceNum;
+            try
+            {
+                string sSQL = "UPDATE Invoices SET InvoiceDate = #" + invoiceDate + "# WHERE InvoiceNum = " + invoiceNum;
 
-            return sSQL;
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

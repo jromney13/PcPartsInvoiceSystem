@@ -59,87 +59,143 @@ namespace PcPartsInvoiceSystem.Main
             }
         }
 
+        /// <summary>
+        /// Inserts an invoice into the database and returns the invoiceNumber of the created invoice.
+        /// </summary>
+        /// <param name="invoiceDate"></param>
+        /// <param name="totalCost"></param>
+        /// <param name="itemList"></param>
+        /// <returns></returns>
         public string AddInvoice(string invoiceDate, string totalCost, List<clsItem> itemList)
         {
-            int iRet = 0;   //Number of return values
-
-            string statement = sql.InsertInvoice(invoiceDate, totalCost);
-
-            //Execute SQL statement
-            iRet = db.ExecuteNonQuery(sql.InsertInvoice(invoiceDate, totalCost));
-
-            string max = db.ExecuteScalarSQL(sql.GetLastInvoiceNumber());
-
-            int index = 1;
-            foreach (clsItem item in itemList)
+            try
             {
-                db.ExecuteNonQuery(sql.InsertLineItem(max, index.ToString(), item.sItemCode));
-                index++;
-            }
+                int iRet = 0;
 
-            return max;
+                string statement = sql.InsertInvoice(invoiceDate, totalCost);
+
+                iRet = db.ExecuteNonQuery(sql.InsertInvoice(invoiceDate, totalCost));
+
+                string max = db.ExecuteScalarSQL(sql.GetLastInvoiceNumber());
+
+                int index = 1;
+                foreach (clsItem item in itemList)
+                {
+                    db.ExecuteNonQuery(sql.InsertLineItem(max, index.ToString(), item.sItemCode));
+                    index++;
+                }
+
+                return max;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
+        /// <summary>
+        /// Gets a list of items from a specified invoiceNum.
+        /// </summary>
+        /// <param name="invoiceNum"></param>
+        /// <returns></returns>
         public List<clsItem> GetInvoice(string invoiceNum)
         {
-            List<clsItem> itemList = new List<clsItem>();
-
-            DataSet ds;
-
-            int iRet = 0;
-
-            string statement = sql.SelectInvoiceItems(invoiceNum);
-
-            ds = db.ExecuteSQLStatement(sql.SelectInvoiceItems(invoiceNum), ref iRet);
-
-            foreach (DataRow dr in ds.Tables[0].Rows)
+            try
             {
-                clsItem item = new clsItem(dr[0].ToString(), dr[1].ToString(), dr[2].ToString());
-                itemList.Add(item);
-            }
+                List<clsItem> itemList = new List<clsItem>();
 
-            return itemList;
+                DataSet ds;
+
+                int iRet = 0;
+
+                string statement = sql.SelectInvoiceItems(invoiceNum);
+
+                ds = db.ExecuteSQLStatement(sql.SelectInvoiceItems(invoiceNum), ref iRet);
+
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    clsItem item = new clsItem(dr[0].ToString(), dr[1].ToString(), dr[2].ToString());
+                    itemList.Add(item);
+                }
+
+                return itemList;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
+        /// <summary>
+        /// Deletes and invoice from the database.
+        /// </summary>
+        /// <param name="invoiceNum"></param>
         public void DeleteInvoice(string invoiceNum)
         {
-            int iRet = 0;   //Number of return values
-
-            //Execute SQL statement
-            iRet = db.ExecuteNonQuery(sql.DeleteLineItems(invoiceNum));
-
-            iRet = db.ExecuteNonQuery(sql.DeleteInvoices(invoiceNum));
-
-        }
-
-        public void DeleteLines(string invoiceNum)
-        {
-            int iRet = 0;   //Number of return values
-
-            //Execute SQL statement
-            iRet = db.ExecuteNonQuery(sql.DeleteLineItems(invoiceNum));
-        }
-
-
-        public void AddLines(string totalCost, List<clsItem> itemList, string invoiceNum, string invoiceDate)
-        {
-            int iRet = 0;   //Number of return values
-
-            //Update total cost
-            iRet = db.ExecuteNonQuery(sql.UpdateTotalCost(totalCost, invoiceNum));
-
-            // update lines
-            int index = 1;
-            foreach (clsItem item in itemList)
+            try
             {
-                db.ExecuteNonQuery(sql.InsertLineItem(invoiceNum, index.ToString(), item.sItemCode));
-                index++;
+                int iRet = 0;
+
+                iRet = db.ExecuteNonQuery(sql.DeleteLineItems(invoiceNum));
+
+                iRet = db.ExecuteNonQuery(sql.DeleteInvoices(invoiceNum));
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
 
-            //update date
-            iRet = db.ExecuteNonQuery(sql.UpdateInvoiceDate(invoiceDate, invoiceNum));
+        }
 
+        /// <summary>
+        /// Deletes the line items from an invoice in the database.
+        /// </summary>
+        /// <param name="invoiceNum"></param>
+        public void DeleteLines(string invoiceNum)
+        {
+            try
+            {
+                int iRet = 0;
 
+                iRet = db.ExecuteNonQuery(sql.DeleteLineItems(invoiceNum));
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Adds invoice lines to the database.
+        /// </summary>
+        /// <param name="totalCost"></param>
+        /// <param name="itemList"></param>
+        /// <param name="invoiceNum"></param>
+        /// <param name="invoiceDate"></param>
+        public void AddLines(string totalCost, List<clsItem> itemList, string invoiceNum, string invoiceDate)
+        {
+            try
+            {
+                int iRet = 0;
+
+                //Update total cost
+                iRet = db.ExecuteNonQuery(sql.UpdateTotalCost(totalCost, invoiceNum));
+
+                // update lines
+                int index = 1;
+                foreach (clsItem item in itemList)
+                {
+                    db.ExecuteNonQuery(sql.InsertLineItem(invoiceNum, index.ToString(), item.sItemCode));
+                    index++;
+                }
+
+                //update date
+                iRet = db.ExecuteNonQuery(sql.UpdateInvoiceDate(invoiceDate, invoiceNum));
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
