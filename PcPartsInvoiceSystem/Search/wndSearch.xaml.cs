@@ -288,11 +288,20 @@ namespace PcPartsInvoiceSystem.Search
             }
         }
 
+        /// <summary>
+        /// Returns if an invoice has been selected
+        /// </summary>
+        /// <returns>True if an invoice is selected, false otherwise</returns>
         public bool IsSelected()
         {
             return selected;
         }
 
+        /// <summary>
+        /// Creates a new main window and shows it when this window is closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closed(object sender, EventArgs e)
         {
             if (!selected)

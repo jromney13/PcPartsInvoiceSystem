@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace PcPartsInvoiceSystem.Search
 {
+    /// <summary>
+    /// Returns SQL results
+    /// </summary>
     class clsSearchSQL
     {
         /// <summary>
