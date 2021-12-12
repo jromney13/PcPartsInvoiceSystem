@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Reflection;
 
 namespace PcPartsInvoiceSystem.Search
 {
@@ -48,25 +49,40 @@ namespace PcPartsInvoiceSystem.Search
         /// <param name="dataList"></param>
         private void loadDataGrid(List<List<String>> dataList) 
         {
-            clearGrid();
-            for(int i = 0; i<dataList.Count; i++)
+            try
             {
-                invoiceDataGrid.Items.Add(dataList[i]);
-                
-            }
-            for (int i = 0; i < dataList.Count;i++) 
-            {
-                Console.WriteLine("List: "+dataList[i][0]);
-            }
-            LoadBoxes(dataList);
+                clearGrid();
+                for (int i = 0; i < dataList.Count; i++)
+                {
+                    invoiceDataGrid.Items.Add(dataList[i]);
 
+                }
+                for (int i = 0; i < dataList.Count; i++)
+                {
+                    Console.WriteLine("List: " + dataList[i][0]);
+                }
+                LoadBoxes(dataList);
+            }
+            catch (Exception ex)
+            {
+                //Low Level Method: Throw error
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
         /// <summary>
         /// clears all cells in data grid
         /// </summary>
         private void clearGrid() 
         {
-            invoiceDataGrid.Items.Clear();
+            try
+            {
+                invoiceDataGrid.Items.Clear();
+            }
+            catch (Exception ex)
+            {
+                //Low Level Method: Throw error
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
         /// <summary>
         /// puts current availiable values into combo boxes
@@ -75,22 +91,30 @@ namespace PcPartsInvoiceSystem.Search
         /// <param name="str"></param>
         private void LoadBoxes(List<List<String>> str) 
         {
-            List<String> numList = new List<String>();
-            List<String> dateList = new List<String>();
-            List<String> costList = new List<String>();
-            for (int i = 0; i < str.Count; i++) 
+            try
             {
-                numList.Add(str[i][0]);
-                dateList.Add(str[i][1]);
-                costList.Add(str[i][2]);
+                List<String> numList = new List<String>();
+                List<String> dateList = new List<String>();
+                List<String> costList = new List<String>();
+                for (int i = 0; i < str.Count; i++)
+                {
+                    numList.Add(str[i][0]);
+                    dateList.Add(str[i][1]);
+                    costList.Add(str[i][2]);
+                }
+                numList = RemoveDups(numList);
+                dateList = RemoveDups(dateList);
+                costList = RemoveDups(costList);
+                costList = SortList(costList);
+                invoiceNumBox.ItemsSource = numList;
+                invoiceDateBox.ItemsSource = dateList;
+                invoiceCostBox.ItemsSource = costList;
             }
-            numList = RemoveDups(numList);
-            dateList = RemoveDups(dateList);
-            costList = RemoveDups(costList);
-            costList = SortList(costList);
-            invoiceNumBox.ItemsSource = numList;
-            invoiceDateBox.ItemsSource = dateList;
-            invoiceCostBox.ItemsSource = costList;
+            catch (Exception ex)
+            {
+                //Low Level Method: Throw error
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
         /// <summary>
         /// Method that removes duplicate dates and costs from the list that will be used for combo boxes
@@ -99,19 +123,27 @@ namespace PcPartsInvoiceSystem.Search
         /// <returns></returns>
         private List<String> RemoveDups(List<String> str) 
         {
-            List<String> temp = new List<String>();
-            temp = str;
-            for (int i = 0; i < temp.Count; i++) 
+            try
             {
-                for (int j = 0; j < temp.Count; j++) 
+                List<String> temp = new List<String>();
+                temp = str;
+                for (int i = 0; i < temp.Count; i++)
                 {
-                    if (temp[i].Equals(temp[j])&&i!=j) 
+                    for (int j = 0; j < temp.Count; j++)
                     {
-                        temp.RemoveAt(j);
+                        if (temp[i].Equals(temp[j]) && i != j)
+                        {
+                            temp.RemoveAt(j);
+                        }
                     }
                 }
+                return temp;
             }
-            return temp;
+            catch (Exception ex)
+            {
+                //Low Level Method: Throw error
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
         /// <summary>
         /// Sorts list of cost for combo box
@@ -120,26 +152,34 @@ namespace PcPartsInvoiceSystem.Search
         /// <returns></returns>
         private List<String> SortList(List<String> str) 
         {
-            int prev;
-            int curr;
-            String temp;
-            for (int j = 0; j < str.Count; j++)
+            try
             {
-                for (int i = 1; i < str.Count; i++)
+                int prev;
+                int curr;
+                String temp;
+                for (int j = 0; j < str.Count; j++)
                 {
-                    Int32.TryParse(str[i - 1], out prev);
-                    Int32.TryParse(str[i], out curr);
-                    if (curr < prev)
+                    for (int i = 1; i < str.Count; i++)
                     {
-                        temp = str[i - 1];
-                        str[i - 1] = str[i];
-                        str[i] = temp;
-                        i = 1;
+                        Int32.TryParse(str[i - 1], out prev);
+                        Int32.TryParse(str[i], out curr);
+                        if (curr < prev)
+                        {
+                            temp = str[i - 1];
+                            str[i - 1] = str[i];
+                            str[i] = temp;
+                            i = 1;
+                        }
                     }
                 }
-            }
 
-            return str;
+                return str;
+            }
+            catch (Exception ex)
+            {
+                //Low Level Method: Throw error
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
         /// <summary>
         /// Method that selects record that is highlighted in the data grid
@@ -174,9 +214,9 @@ namespace PcPartsInvoiceSystem.Search
                 //string invoiceNum = invoiceNumBox.SelectedItem.ToString();
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
 
         }
@@ -192,9 +232,9 @@ namespace PcPartsInvoiceSystem.Search
             {
                 this.Close();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
 
         }
@@ -217,7 +257,7 @@ namespace PcPartsInvoiceSystem.Search
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
 
         }
@@ -240,7 +280,7 @@ namespace PcPartsInvoiceSystem.Search
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
         /// <summary>
@@ -258,9 +298,9 @@ namespace PcPartsInvoiceSystem.Search
                     loadDataGrid(datalogic.SQLGen());
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
         /// <summary>
@@ -282,9 +322,9 @@ namespace PcPartsInvoiceSystem.Search
                 loadDataGrid(lt);
                 LoadBoxes(lt);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
 
@@ -294,7 +334,15 @@ namespace PcPartsInvoiceSystem.Search
         /// <returns>True if an invoice is selected, false otherwise</returns>
         public bool IsSelected()
         {
-            return selected;
+            try
+            {
+                return selected;
+            }
+            catch (Exception ex)
+            {
+                //Low Level Method: Throw error
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -304,12 +352,39 @@ namespace PcPartsInvoiceSystem.Search
         /// <param name="e"></param>
         private void Window_Closed(object sender, EventArgs e)
         {
-            if (!selected)
+            try
             {
-                wndMain wndMain = new wndMain();
-                wndMain.Show();
+                if (!selected)
+                {
+                    wndMain wndMain = new wndMain();
+                    wndMain.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
 
+        }
+
+        /// <summary>
+        /// Handles any exceptions which cause an error in the program. Shows a message box to pinpoint the method which caused the error.
+        /// </summary>
+        /// <param name="sClass">The class of the error</param>
+        /// <param name="sMethod">The method of the error</param>
+        /// <param name="sMessage">The trail leading to the exception</param>
+        private void HandleError(string sClass, string sMethod, string sMessage)
+        {
+            try
+            {
+                //Would write to a file or database here.
+                MessageBox.Show(sClass + "." + sMethod + " -> " + sMessage);
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
         }
     }
 }

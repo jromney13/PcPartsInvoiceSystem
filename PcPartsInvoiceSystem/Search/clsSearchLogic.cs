@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace PcPartsInvoiceSystem.Search
 {
+    /// <summary>
+    /// Logic for the Search Window
+    /// </summary>
     class clsSearchLogic
     {
         /// <summary>
@@ -36,41 +40,49 @@ namespace PcPartsInvoiceSystem.Search
         /// <returns></returns>
         public List<List<String>> SQLGen() 
         {
-            bool mult= false;
-            String sql = "SELECT * FROM Invoices";
-            if (!invoiceDate.Equals(String.Empty)) 
+            try
             {
-                sql += " WHERE (InvoiceDate = #"+invoiceDate+"#)";
-                mult = true;
-            }
-            if (invoiceCost >= 0)
-            {
-                if (mult)
+                bool mult = false;
+                String sql = "SELECT * FROM Invoices";
+                if (!invoiceDate.Equals(String.Empty))
                 {
-                    sql += " AND";
-                }
-                else
-                {
-                    sql += " WHERE";
+                    sql += " WHERE (InvoiceDate = #" + invoiceDate + "#)";
                     mult = true;
                 }
-                sql += " (TotalCost = " + invoiceCost + ")";
+                if (invoiceCost >= 0)
+                {
+                    if (mult)
+                    {
+                        sql += " AND";
+                    }
+                    else
+                    {
+                        sql += " WHERE";
+                        mult = true;
+                    }
+                    sql += " (TotalCost = " + invoiceCost + ")";
+                }
+                if (invoiceNum >= 0)
+                {
+                    if (mult)
+                    {
+                        sql += " AND";
+                    }
+                    else
+                    {
+                        sql += " WHERE";
+                        mult = true;
+                    }
+                    sql += " (invoiceNum = " + invoiceNum + ")";
+                }
+                clsSearchSQL data = new clsSearchSQL(sql);
+                return data.GetData();
             }
-            if (invoiceNum >= 0) 
+            catch (Exception ex)
             {
-                if (mult)
-                {
-                    sql += " AND";
-                }
-                else 
-                {
-                    sql += " WHERE";
-                    mult = true;
-                }
-                sql += " (invoiceNum = " + invoiceNum + ")";
+                //Low Level Method: Throw error
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-            clsSearchSQL data = new clsSearchSQL(sql);
-            return data.GetData();
         }
         /// <summary>
         /// sets invoiceNum
@@ -78,7 +90,15 @@ namespace PcPartsInvoiceSystem.Search
         /// <param name="invoiceNum"></param>
         public void UpdateInvoiceNum(int invoiceNum) 
         {
-            this.invoiceNum = invoiceNum;
+            try
+            {
+                this.invoiceNum = invoiceNum;
+            }
+            catch (Exception ex)
+            {
+                //Low Level Method: Throw error
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
         /// <summary>
         /// sets invoiceDate
@@ -86,7 +106,15 @@ namespace PcPartsInvoiceSystem.Search
         /// <param name="invoiceDate"></param>
         public void UpdateInvoiceDate(String invoiceDate) 
         {
-            this.invoiceDate = invoiceDate;
+            try
+            {
+                this.invoiceDate = invoiceDate;
+            }
+            catch (Exception ex)
+            {
+                //Low Level Method: Throw error
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
         /// <summary>
         /// sets invoice cost
@@ -94,7 +122,15 @@ namespace PcPartsInvoiceSystem.Search
         /// <param name="invoiceCost"></param>
         public void UpdateInvoiceCost(double invoiceCost) 
         {
-            this.invoiceCost = invoiceCost;
+            try
+            {
+                this.invoiceCost = invoiceCost;
+            }
+            catch (Exception ex)
+            {
+                //Low Level Method: Throw error
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
     }
 }

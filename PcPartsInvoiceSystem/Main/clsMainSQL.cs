@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PcPartsInvoiceSystem.Main
 {
+    /// <summary>
+    /// Handles Main Window SQL statements
+    /// </summary>
     class clsMainSQL
     {
         /// <summary>

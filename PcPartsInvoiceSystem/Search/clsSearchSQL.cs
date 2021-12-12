@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace PcPartsInvoiceSystem.Search
 {
@@ -32,31 +33,39 @@ namespace PcPartsInvoiceSystem.Search
         /// <returns></returns>
         public List<List<String>> GetData() 
         {
-            List<List<String>> dataList = new List<List<String>>();
-            List<String> tempList;
-            String temp;
-            String[] tempArr;
-            String conString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + @"..\..\..\Invoice.mdb";
-            using (OleDbConnection con = new OleDbConnection(conString))
+            try
             {
-                OleDbCommand cmd = new OleDbCommand(sql, con);
-                con.Open();
-                using (OleDbDataReader reader = cmd.ExecuteReader())
+                List<List<String>> dataList = new List<List<String>>();
+                List<String> tempList;
+                String temp;
+                String[] tempArr;
+                String conString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + @"..\..\..\Invoice.mdb";
+                using (OleDbConnection con = new OleDbConnection(conString))
                 {
-                    while (reader.Read())
+                    OleDbCommand cmd = new OleDbCommand(sql, con);
+                    con.Open();
+                    using (OleDbDataReader reader = cmd.ExecuteReader())
                     {
-                        tempArr = new string[2];
-                        tempList = new List<string>();
-                        tempList.Add(reader["InvoiceNum"].ToString());
-                        temp = reader["InvoiceDate"].ToString();
-                        tempArr = temp.Split(' ');
-                        tempList.Add(tempArr[0]);
-                        tempList.Add(reader["TotalCost"].ToString());
-                        dataList.Add(tempList);
+                        while (reader.Read())
+                        {
+                            tempArr = new string[2];
+                            tempList = new List<string>();
+                            tempList.Add(reader["InvoiceNum"].ToString());
+                            temp = reader["InvoiceDate"].ToString();
+                            tempArr = temp.Split(' ');
+                            tempList.Add(tempArr[0]);
+                            tempList.Add(reader["TotalCost"].ToString());
+                            dataList.Add(tempList);
+                        }
                     }
                 }
+                return dataList;
             }
-            return dataList;
+            catch (Exception ex)
+            {
+                //Low Level Method: Throw error
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
     }
 }
